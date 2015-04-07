@@ -12,7 +12,7 @@ module JiraAgileStats
       }
 
       if config[:boards][board.to_s]
-        @url = config[:url] + '/rest/greenhopper/1.0/rapid/charts/controlchart.json?rapidViewId=' + board.to_s
+        @url = config[:url].gsub(/\/$/, '') + '/rest/greenhopper/1.0/rapid/charts/controlchart.json?rapidViewId=' + board.to_s
         config[:boards][board.to_s][:filters].each { |f|
           @url = @url + '&quickFilterId=' + f.to_s
         } if config[:boards][board.to_s]
@@ -25,8 +25,10 @@ module JiraAgileStats
 
     def get_raw(swimlane, filters, date_since, date_until)
 
-      url = @url + '&swimlaneId=' + swimlane.to_s
-      url = url + "&days=custom&from=#{date_since}&to=#{date_until}" 
+      url = @url + "&days=custom&from=#{date_since}&to=#{date_until}" 
+
+      swimlane = [swimlane] unless swimlane.is_a? Array
+      swimlane.each { |l| url = url + '&swimlaneId=' + l.to_s }
 
       filters.each { |f| url = url + '&quickFilterId=' + f.to_s }
       got = HTTParty.get url, { basic_auth: @auth }
