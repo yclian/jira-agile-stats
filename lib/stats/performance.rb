@@ -77,7 +77,6 @@ module JiraAgileStats
       
       end
     
-    
       value[:min_lead_time] = milliseconds_to_days value[:min_lead_time]
       value[:sum_lead_time] = milliseconds_to_days value[:sum_lead_time]
       value[:avg_lead_time] = value[:sum_lead_time] / value[:count]
@@ -88,7 +87,6 @@ module JiraAgileStats
       value[:monthly_throughput] = value[:weekly_throughput] * (365.25 / 12 / 7)
     
       return value
-    
     
     end
 
