@@ -1,0 +1,16 @@
+{
+  url: '<URL>',
+  username: '<USER>',
+  password: '<PASS>',
+  boards: {
+    # '51' => {
+    #   filters: [179, 242, 246, 459],
+    #   columns: {
+    #     ready: 2,
+    #     started: 3,
+    #     done: 7
+    #   }
+    # }
+  }
+}
+
