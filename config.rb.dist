@@ -11,6 +11,11 @@
     #     done: 7
     #   }
     # }
+  },
+  # Manual mapping of team to projects, or project to sub-projects.
+  # Currently is used by analyzing defects.
+  projects: {
+    # 'label' => ['A', 'B'] 
   }
 }
 

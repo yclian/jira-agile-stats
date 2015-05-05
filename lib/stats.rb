@@ -2,6 +2,7 @@ require 'httparty'
 
 module JiraAgileStats
   
+  autoload :Basic, 'stats/basic'
   autoload :Performance, 'stats/performance'
 
   module Utils
