@@ -12,10 +12,14 @@
     #   }
     # }
   },
-  # Manual mapping of team to projects, or project to sub-projects.
-  # Currently is used by analyzing defects.
-  projects: {
-    # 'label' => ['A', 'B'] 
+
+  # Predefined filters for analysis. Currently used to analyze defects.
+  filters: {
+    'defects_open' => 'type = Bug AND 
+                       resolution IS EMPTY OR resolution NOT IN ("Duplicate", "Invalid") AND
+                       status != Closed',
   }
+
+
 }
 

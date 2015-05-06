@@ -13,3 +13,7 @@ How?
 
     DATE_SINCE=2015-03-01 DATE_UNTIL=2015-03-31 ruby performance.rb 
 
+In a similar fashion, run `defects.rb`, which returns basic statistics according to configured issue filters:
+
+    DATE_SINCE=2015-03-01 DATE_UNTIL=2015-03-31 ruby defects.rb
+

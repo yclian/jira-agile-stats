@@ -10,8 +10,5 @@ $date_until   = ENV['DATE_UNTIL'] || Date.today.strftime('%Y-%m-%d')
 
 d = JiraAgileStats::Basic.new $config
 
-defects = d.get 'defects_open', nil, nil
-puts d.get 'defects_created_during', nil, nil
-
-puts defects
+puts d.get 'defects_open', $date_since, $date_until
 
