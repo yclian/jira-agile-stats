@@ -36,7 +36,16 @@ module JiraAgileStats
         raise Net::HTTPError.new "#{got.response.code} #{got.response.message}", got.response
     end
 
-    def get(swimlane, filters, date_since, date_until)
+    def get(*args)
+
+      if args.length == 1 and args[0].is_a? Hash
+        get_with = args[0]  
+      else
+        # Backward compatibility
+        get_with = { swimlane: args[0], filters: args[1], date_since: args[2], date_until: args[3] }
+      end
+
+      swimlane, filters, date_since, date_until, started, done = get_with[:swimlane], get_with[:filters], get_with[:date_since], get_with[:date_until], get_with[:flow_start], get_with[:flow_end]
     
       data = get_raw swimlane, filters, date_since, date_until
       value = {
@@ -51,11 +60,11 @@ module JiraAgileStats
         weekly_throughput: 0,
         monthly_throughput: 0,
       }
-    
+      
       time_since = Date.parse(date_since).to_time.to_i
       time_until = Date.parse(date_until).to_time.to_i
-      started = @board[:columns][:started]
-      done = @board[:columns][:done]
+      started = started || @board[:columns][:started]
+      done = done || @board[:columns][:done]
       days = milliseconds_to_days(time_until - time_since) + 1
       
       data['issues'].each do |i|
