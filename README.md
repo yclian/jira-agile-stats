@@ -17,3 +17,7 @@ In a similar fashion, run `defects.rb`, which returns basic statistics according
 
     DATE_SINCE=2015-03-01 DATE_UNTIL=2015-03-31 ruby defects.rb
 
+And for scope (burndown) data, run `scope.rb` this way, by the number of sprints to inspect:
+
+    SPRINTS=5 ruby scope.rb
+

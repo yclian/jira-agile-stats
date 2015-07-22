@@ -4,6 +4,7 @@ module JiraAgileStats
   
   autoload :Basic, 'stats/basic'
   autoload :Performance, 'stats/performance'
+  autoload :Scope, 'stats/scope'
 
   module Utils
 
