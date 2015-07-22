@@ -31,12 +31,13 @@ module JiraAgileStats
         name: nil,
 
         start_time: 0,
+        start_date: nil,
         end_time: 0,
+        end_date: nil,
         elapsed_time: 0,
 
         burndown_start: 0,
         burndown_start_in_hours: 0,
-        burndown_end: 0,
         burnup_end: 0,
         burnup_end_in_hours: 0,
       }
@@ -44,7 +45,9 @@ module JiraAgileStats
       estimates = {}
 
       value[:start_time] = data['startTime'] / 1000
+      value[:start_date] = Time.at data['startTime'] / 1000
       value[:end_time] = data['endTime'] / 1000
+      value[:end_date] = Time.at data['endTime'] / 1000
       value[:elapsed_time] = (data['endTime'] - data['startTime']) / 1000
       value[:elapsed_time_in_hours] = (value[:elapsed_time].to_f / 60 / 60).round 3
       value[:elapsed_time_in_days] = (value[:elapsed_time_in_hours].to_f / 24).round 3
