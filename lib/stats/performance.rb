@@ -13,9 +13,6 @@ module JiraAgileStats
 
       if config[:boards][board.to_s]
         @url = config[:url].gsub(/\/$/, '') + '/rest/greenhopper/1.0/rapid/charts/controlchart.json?rapidViewId=' + board.to_s
-        config[:boards][board.to_s][:filters].each { |f|
-          @url = @url + '&quickFilterId=' + f.to_s
-        } if config[:boards][board.to_s]
         @board = config[:boards][board.to_s] 
       else
         raise ArgumentError.new "Could not read board configuration (#{board})"
@@ -26,14 +23,21 @@ module JiraAgileStats
     def get_raw(swimlane, filters, date_since, date_until)
 
       url = @url + "&days=custom&from=#{date_since}&to=#{date_until}" 
+      url = url + get_query_string_for_filters(filters)
 
       swimlane = [swimlane] unless swimlane.is_a? Array
       swimlane.each { |l| url = url + '&swimlaneId=' + l.to_s }
 
-      filters.each { |f| url = url + '&quickFilterId=' + f.to_s }
       got = HTTParty.get url, { basic_auth: @auth }
       json = JSON.parse got.response.body if got.response.is_a?(Net::HTTPSuccess) or
         raise Net::HTTPError.new "#{got.response.code} #{got.response.message}", got.response
+    end
+
+    def get_query_string_for_filters(filters)
+      f = filters || @board[:filters]
+      u = ''
+      f.each { |g| u = u + '&quickFilterId=' + g.to_s } 
+      return u
     end
 
     def get(*args)
